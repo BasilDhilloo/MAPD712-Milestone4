@@ -13,6 +13,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntIcons from 'react-native-vector-icons/AntDesign';
 
+import PatientsScreen from './screens/PatientScreens'
+
 import {
   SafeAreaView,
   ScrollView,
@@ -31,12 +33,6 @@ const HomeScreen = () => {
   )
 }
 
-const PatientsScreen = () => {
-  return(
-    <Text>This is Patients Screen</Text>
-  )
-}
-
 const App: () => Node = () => {
   return (
     <NavigationContainer>
@@ -46,7 +42,7 @@ const App: () => Node = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: () => (
-            <Icon name="home-sharp" size={25} color="#4F8EF7"/>
+            <Icon name="home-outline" size={25} color="#4F8EF7"/>
           )
         }}/>
         <Tab.Screen 
@@ -59,7 +55,7 @@ const App: () => Node = () => {
         }}/>
         <Tab.Screen 
         name="Records" 
-        component={PatientsScreen}
+        component={HomeScreen}
         options={{
           tabBarIcon: () => (
             <AntIcons name="filetext1" size={25} color="#4F8EF7"/>
@@ -67,10 +63,10 @@ const App: () => Node = () => {
         }}/>
         <Tab.Screen 
         name="Settings" 
-        component={PatientsScreen}
+        component={HomeScreen}
         options={{
           tabBarIcon: () => (
-            <Icon name="settings" size={25} color="#4F8EF7"/>
+            <Icon name="settings-outline" size={25} color="#4F8EF7"/>
           )
         }}/>
       </Tab.Navigator>
