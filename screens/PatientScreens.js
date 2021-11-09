@@ -4,6 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Button, Text, View, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AntIcons from 'react-native-vector-icons/AntDesign';
+
+import AddPatientScreen from './AddPatientScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,7 +48,7 @@ const patientsData = [
     },
   ];
 
-const PatientsHomeScreen = () => {
+const PatientsHomeScreen = ({navigation}) => {
     const renderItem = ({ item }) => (
         <View style={styles.item}>
             <Icon style={{flex: 1}} name="person-circle" size={80} />
@@ -55,18 +58,17 @@ const PatientsHomeScreen = () => {
     return(
         <SafeAreaView style={styles.container}>
         <Text style={styles.screenTitle}>All Patients</Text>
+        <AntIcons 
+            style={styles.addPatientButton}
+            name="pluscircle" 
+            size={30} 
+            onPress={()=>navigation.navigate('AddPatientScreen')}/>
         <FlatList
           data={patientsData}
           renderItem={renderItem}
           keyExtractor={item => item.id}
         />
       </SafeAreaView>
-    )
-}
-
-const AddPatientScreen = () => {
-    return(
-        <Text>Patients Homee</Text>
     )
 }
 
@@ -96,19 +98,24 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightgrey',
         padding: 5,
         marginVertical: 2,
-        marginHorizontal: 10,
+        marginHorizontal: 15,
     },
     itemName: {
         flex: 4,
         fontSize: 20,
         color: "black",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        textAlignVertical: 'center'
     },
     screenTitle: {
         textAlign: "center",
         fontSize: 30,
         color: "black",
         fontWeight: "bold"
+    },
+    addPatientButton: {
+        marginHorizontal: 15,
+        textAlign: 'right'
     }
   });
 
