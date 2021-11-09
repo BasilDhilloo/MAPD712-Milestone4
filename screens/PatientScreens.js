@@ -54,6 +54,7 @@ const PatientsHomeScreen = () => {
       );
     return(
         <SafeAreaView style={styles.container}>
+        <Text style={styles.screenTitle}>All Patients</Text>
         <FlatList
           data={patientsData}
           renderItem={renderItem}
@@ -100,7 +101,14 @@ const styles = StyleSheet.create({
     itemName: {
         flex: 4,
         fontSize: 20,
-        color: "black"
+        color: "black",
+        fontWeight: "bold"
+    },
+    screenTitle: {
+        textAlign: "center",
+        fontSize: 30,
+        color: "black",
+        fontWeight: "bold"
     }
   });
 

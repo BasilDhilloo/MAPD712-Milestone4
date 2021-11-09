@@ -36,7 +36,7 @@ const HomeScreen = () => {
 const App: () => Node = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={{headerShown: false}}>
         <Tab.Screen 
         name="Home" 
         component={HomeScreen}
