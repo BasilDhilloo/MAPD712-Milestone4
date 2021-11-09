@@ -8,6 +8,11 @@
 
 import React from 'react';
 import type {Node} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
+import AntIcons from 'react-native-vector-icons/AntDesign';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -18,75 +23,58 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const Tab = createBottomTabNavigator();
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+const HomeScreen = () => {
+  return(
+    <Text>This is Home Screen</Text>
+  )
+}
+
+const PatientsScreen = () => {
+  return(
+    <Text>This is Patients Screen</Text>
+  )
+}
 
 const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen 
+        name="Home" 
+        component={HomeScreen}
+        options={{
+          tabBarIcon: () => (
+            <Icon name="home-sharp" size={25} color="#4F8EF7"/>
+          )
+        }}/>
+        <Tab.Screen 
+        name="Patients" 
+        component={PatientsScreen}
+        options={{
+          tabBarIcon: () => (
+            <AntIcons name="contacts" size={25} color="#4F8EF7"/>
+          )
+        }}/>
+        <Tab.Screen 
+        name="Records" 
+        component={PatientsScreen}
+        options={{
+          tabBarIcon: () => (
+            <AntIcons name="filetext1" size={25} color="#4F8EF7"/>
+          )
+        }}/>
+        <Tab.Screen 
+        name="Settings" 
+        component={PatientsScreen}
+        options={{
+          tabBarIcon: () => (
+            <Icon name="settings" size={25} color="#4F8EF7"/>
+          )
+        }}/>
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 
