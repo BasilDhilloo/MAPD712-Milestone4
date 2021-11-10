@@ -80,8 +80,30 @@ const PatientsHomeScreen = ({navigation}) => {
       );
 
     useEffect(() => {
-        setPatientsList(patientsData);
-    })
+        fetch('http://192.168.2.22:5000/patients', {
+            method: 'GET',
+            headers: {
+                "Accept": "application/json"
+            }
+        })
+        .then(res => res.json())
+        .then(patientList => {
+            var newPatientData = []
+            patientList.map((patient) => {
+                newPatientData = [...newPatientData, {
+                    id: patient._id,
+                    firstName: patient.firstName,
+                    lastName: patient.lastName,
+                    dob: patient.birthDate,
+                    doc: patient.doctor
+                }]
+            })
+            setPatientsList(newPatientData);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }, [])
 
     return(
         <SafeAreaView style={styles.container}>

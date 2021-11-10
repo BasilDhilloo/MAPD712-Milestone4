@@ -20,7 +20,7 @@ const ViewPatientScreen = ({ route, navigation }) => {
             <Text style={styles.dataLabel}>Patient Name</Text>
             <Text style={styles.dataValue}>{patient.firstName} {patient.lastName}</Text>
             <Text style={styles.dataLabel}>Patient ID</Text>
-            <Text style={styles.dataValue}>{patient.id}</Text>
+            <Text style={{...styles.dataValue, fontSize: 25}}>{patient.id}</Text>
             <Text style={styles.dataLabel}>Patient DOB</Text>
             <Text style={styles.dataValue}>{patient.dob}</Text>
             <Text style={styles.dataLabel}>Doctor Appointed</Text>
