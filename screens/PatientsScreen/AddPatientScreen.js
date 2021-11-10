@@ -52,7 +52,7 @@ const AddPatientScreen = () => {
                 </View>
                 <Text style={styles.inputLabel}>Date of birth</Text>
                 <View style={styles.textInputContainer}>
-                    <TextInput style={styles.inputLabel}/>
+                    <TextInput style={styles.inputLabel} placeholder="mm/dd/yyyy"/>
                 </View>
                 <Text style={styles.inputLabel}>Gender</Text>
                 <View style={{flexDirection:"row"}}>
@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
     saveButton: {
         alignSelf: 'center',
         marginTop:10,
-
     }
   });
 export default AddPatientScreen

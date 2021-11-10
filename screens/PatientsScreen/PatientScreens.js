@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Button, Text, View, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
@@ -7,54 +7,82 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AntIcons from 'react-native-vector-icons/AntDesign';
 
 import AddPatientScreen from './AddPatientScreen';
+import ViewPatientScreen from './ViewPatientScreen';
 
 const Stack = createNativeStackNavigator();
 
-const patientsData = [
+var patientsData = [
     {
-        id: 1,
-        firstName: "FirstName1",
-        lastName: "LastName1"
+        id: "SK-0033111",
+        firstName: "Dominic",
+        lastName: "King",
+        dob: "30 Oct, 1965",
+        doc: "Dr. Max Manning"
     },
     {
-        id: 2,
-        firstName: "FirstName2",
-        lastName: "LastName2"
+        id: "SK-0033112",
+        firstName: "Jane",
+        lastName: "Lawrence",
+        dob: "5 June, 1965",
+        doc: "Dr. Max Manning"
     },
     {
-        id: 3,
-        firstName: "FirstName3",
-        lastName: "LastName3"
+        id: "SK-0033113",
+        firstName: "Max",
+        lastName: "Manning",
+        dob: "2 Jan, 1989",
+        doc: "Dr. Max Manning"
     },
     {
-        id: 4,
-        firstName: "FirstName3",
-        lastName: "LastName3"
+        id: "SK-0033114",
+        firstName: "Hannah",
+        lastName: "Sharp",
+        dob: "30 March, 1965",
+        doc: "Dr. Max Manning"
     },
     {
-        id: 5,
-        firstName: "FirstName3",
-        lastName: "LastName3"
+        id: "SK-0033115",
+        firstName: "Jack",
+        lastName: "Piper",
+        dob: "6 July, 1965",
+        doc: "Dr. Max Manning"
     },
     {
-        id: 6,
-        firstName: "FirstName3",
-        lastName: "LastName3"
+        id: "SK-0033116",
+        firstName: "Colin",
+        lastName: "Ferguson",
+        dob: "30 Oct, 1965",
+        doc: "Dr. Max Manning"
     },
     {
-        id: 7,
-        firstName: "FirstName3",
-        lastName: "LastName3"
+        id: "SK-0033117",
+        firstName: "Maria",
+        lastName: "Martin",
+        dob: "30 Oct, 1965",
+        doc: "Dr. Max Manning"
     },
   ];
 
 const PatientsHomeScreen = ({navigation}) => {
+
+    const [patientsList, setPatientsList] = useState([])
+
     const renderItem = ({ item }) => (
-        <View style={styles.item}>
+        <View
+            style={styles.item}>
             <Icon style={{flex: 1}} name="person-circle" size={80} />
-            <Text style={styles.itemName}>{item.firstName} {item.lastName}</Text>
+            <Text 
+                style={styles.itemName} 
+                onPress={()=>navigation.navigate('ViewPatientScreen', {patient: item})}>
+                {item.firstName} {item.lastName}
+            </Text>
         </View>
       );
+
+    useEffect(() => {
+        setPatientsList(patientsData);
+    })
+
     return(
         <SafeAreaView style={styles.container}>
         <Text style={styles.screenTitle}>All Patients</Text>
@@ -64,7 +92,7 @@ const PatientsHomeScreen = ({navigation}) => {
             size={30} 
             onPress={()=>navigation.navigate('AddPatientScreen')}/>
         <FlatList
-          data={patientsData}
+          data={patientsList}
           renderItem={renderItem}
           keyExtractor={item => item.id}
         />
@@ -83,6 +111,9 @@ const PatientsScreen = ({ navigation }) => {
                 <Stack.Screen
                 name="AddPatientScreen"
                 component={AddPatientScreen} />
+                <Stack.Screen
+                name="ViewPatientScreen"
+                component={ViewPatientScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )    
