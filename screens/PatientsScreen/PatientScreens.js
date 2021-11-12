@@ -103,6 +103,7 @@ const PatientsHomeScreen = ({navigation}) => {
         .catch((err) => {
             console.log(err);
         })
+        setPatientsList(patientsData)
     }, [])
 
     return(

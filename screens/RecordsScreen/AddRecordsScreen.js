@@ -1,16 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import React, { useState } from 'react';
 import { Button, Text, View, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntIcons from 'react-native-vector-icons/AntDesign';
+import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
-import AddRecordsScreen from './AddRecordsScreen';
-import ViewRecordsScreen from './ViewRecordsScreen';
+function RadioButton(props) {
+    return (
+        <View style={[{
+          height: 24,
+          width: 24,
+          borderRadius: 12,
+          borderWidth: 2,
+          borderColor: '#000',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }, props.style]}>
+          {
+            props.selected ?
+              <View style={{
+                height: 12,
+                width: 12,
+                borderRadius: 6,
+                backgroundColor: '#000',
+              }}/>
+              : null
+          }
+        </View>
+    );
+  }
 
-
-const Stack = createNativeStackNavigator();
+var amPM = ["AM","PM"];
+var dataType = ["Blood Pressure (X/Y mmHg)","Respiratory Rate (X/min)","Blood Oxygen Level (X%)","Heartbeat Rate (X/min)"];
 
 var patientsData = [
     {
@@ -253,83 +274,95 @@ var patientsData = [
     },
   ];
 
-  
+const AddRecordsScreen = () => {
 
-const RecordsHomeScreen = ({navigation}) => {
+    const [selectedAmPm, setselectedAmPm] = useState(0);
+    const [selectedDataType, setselectedDataType] = useState(0);
+    const [selectedPatient, setselectedPatient] = useState(0);
 
-    const [patientsList, setPatientsList] = useState([])
-
-    const renderItem = ({ item }) => (
-        <View
-            style={styles.item}>
-            <Icon style={{flex: 1}} name="person-circle" size={80} />
-            <Text 
-                style={styles.itemName} 
-                onPress={()=>navigation.navigate('ViewRecordsScreen', {patient: item})}>
-                {item.firstName} {item.lastName}
-            </Text>
-        </View>
-      );
-
-    useEffect(() => {
-        setPatientsList(patientsData)
-    }, [])
 
     return(
         <SafeAreaView style={styles.container}>
-        <Text style={styles.screenTitle}>Records Screen</Text>
-        <AntIcons 
-            style={styles.addPatientButton}
-            name="pluscircle" 
-            size={30} 
-            onPress={()=>navigation.navigate('AddRecordsScreen')}/>
-        <FlatList
-          data={patientsList}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
-      </SafeAreaView>
-    )    
+            <ScrollView>
+                <Text style={styles.screenTitle}>Add Records</Text>
+                <Text style={styles.inputLabel}>Patient Name</Text>
+                <View style={{flexDirection:"row"}}>
+                    <View style={styles.divStyle}>
+                        <Picker
+                            selectedValue={selectedPatient}
+                            onValueChange={(itemValue, itemIndex) =>
+                                setselectedPatient(itemValue) }>
+                                {patientsData.map((item) => {
+                                    var lab = item.firstName + " " + item.lastName;
+                                    return <Picker.Item label={lab} value={item.id} key={item.id}/> 
+                                }
+                            )}
+                        </Picker>
+                    </View>
+                </View>
 
+                
+                
+                <Text style={styles.inputLabel}>Date</Text>
+                <View style={styles.textInputContainer}>
+                    <TextInput style={styles.inputLabel} placeholder="mm/dd/yyyy"/>
+                </View>
+                
+                <Text style={styles.inputLabel}>Time [24H]</Text>
+                <View style={{flexDirection:"row"}}>
+                <View style={styles.textInputContainer}>
+                    <TextInput style={styles.inputLabel} placeholder="Hours"/>
+                </View>
+                <View style={styles.textInputContainer}>
+                    <TextInput style={styles.inputLabel} placeholder="Minutes"/>
+                </View>
+                <View style={styles.textInputContainer}>
+                    <TextInput style={styles.inputLabel} placeholder="Seconds"/>
+                </View>
+                    <View style={{flex: 1, flexDirection:"column", borderWidth:1, borderColor:"black", height:63.5}}>
+                        <Picker
+                            selectedValue={selectedAmPm}
+                            onValueChange={(itemValue, itemIndex) =>
+                                setselectedAmPm(itemValue) }>
+                                {amPM.map((item) => {
+                                    return <Picker.Item label={item} value={item} key={item}/> 
+                                }
+                            )}
+                        </Picker>
+                    </View>
+                </View>
+                <Text style={styles.inputLabel}>Record Type</Text>
+                <View style={{flexDirection:"row"}}>
+                    <View style={styles.divStyle}>
+                        <Picker
+                            selectedValue={selectedDataType}
+                            onValueChange={(itemValue, itemIndex) =>
+                                setselectedDataType(itemValue) }>
+                                {dataType.map((item) => {
+                                    return <Picker.Item label={item} value={item} key={item}/> 
+                                }
+                            )}
+                        </Picker>
+                    </View>
+                </View>
+                <Text style={styles.inputLabel}>Reading/Value</Text>
+                <View style={styles.textInputContainer}>
+                    <TextInput style={styles.inputLabel} placeholder="Value"/>
+                </View>
+                <View style={styles.saveButton}>
+                <Button 
+                    title="   SAVE   "/>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+    )
 }
-
-
-const RecordsScreens = ({ navigation }) => {
-    return(
-        <NavigationContainer independent={true}>
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-                <Stack.Screen
-                name="RecordsHomeScreen"
-                component={RecordsHomeScreen} />
-                <Stack.Screen
-                name="AddRecordsScreen"
-                component={AddRecordsScreen} />
-                <Stack.Screen
-                name="ViewRecordsScreen"
-                component={ViewRecordsScreen} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )    
-};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: StatusBar.currentHeight || 0
-    },
-    item: {
-        flexDirection: "row",
-        backgroundColor: 'lightgrey',
-        padding: 5,
-        marginVertical: 2,
-        marginHorizontal: 15,
-    },
-    itemName: {
-        flex: 4,
-        fontSize: 20,
-        color: "black",
-        fontWeight: "bold",
-        textAlignVertical: 'center',
+        marginTop: StatusBar.currentHeight || 0,
+        marginHorizontal: 10
     },
     screenTitle: {
         textAlign: "center",
@@ -337,10 +370,32 @@ const styles = StyleSheet.create({
         color: "black",
         fontWeight: "bold"
     },
-    addPatientButton: {
-        marginHorizontal: 15,
-        textAlign: 'right'
+    patientAvatar: {
+        textAlign: 'center',
+    },
+    addPatientAvatar: {
+        marginTop: -30,
+        marginRight: -40,
+        textAlign: 'center',
+    },
+    inputLabel: {
+        fontSize: 20,
+        marginTop:10,
+        marginBottom: 3
+    },
+    textInputContainer: {
+        borderWidth: 1,
+        marginBottom: 10
+    },
+    saveButton: {
+        alignSelf: 'center',
+        marginTop:10
+    },
+    divStyle: {
+        flex: 2, 
+        flexDirection:"column", 
+        borderWidth:1, 
+        borderColor:"black"
     }
   });
-
-export default RecordsScreens;
+export default AddRecordsScreen
