@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Button, Text, View, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+import { Button, Text, View, SafeAreaView, StyleSheet, StatusBar, ToastAndroid } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntIcons from 'react-native-vector-icons/AntDesign';
@@ -47,6 +47,7 @@ const PatientsHomeScreen = ({navigation}) => {
                 }]
             })
             setPatientsList(newPatientData);
+            ToastAndroid.showWithGravityAndOffset("Patients' list refreshed", ToastAndroid.SHORT, ToastAndroid.BOTTOM,0,200);
         })
         .catch((err) => {
             console.log(err);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Text, View, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+import { Button, Text, View, SafeAreaView, StyleSheet, StatusBar, ToastAndroid } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntIcons from 'react-native-vector-icons/AntDesign';
@@ -67,7 +67,6 @@ const AddPatientScreen = () => {
             department: "General",
             doctor: "Dr. Drake"
         }
-        console.log(newPatient)
         fetch('http://192.168.2.16:5000/patients', {
             method: 'POST',
             headers: {
@@ -75,10 +74,26 @@ const AddPatientScreen = () => {
             },
             body: JSON.stringify(newPatient)
         })
-        .then(response => response.json())
-        .then(data => console.log(data))
+        .then(response => {
+            console.log(response.status)
+            if(response.status == 201) {
+                ToastAndroid.showWithGravityAndOffset("Success! Patient added.", 
+                                ToastAndroid.SHORT, ToastAndroid.BOTTOM,0,200);
+                setFirstname("");
+                setLastname("");
+                setBirthdate("");
+            } else {
+                ToastAndroid.showWithGravityAndOffset(`Error! Something went wrong`, 
+                                ToastAndroid.SHORT, ToastAndroid.BOTTOM,0,200);
+            }
+        })
+        .then(data => {
+            console.log(data)
+        })
         .catch(err => {
             console.log(err)
+            ToastAndroid.showWithGravityAndOffset("Oops! Something went wrong", 
+                            ToastAndroid.SHORT, ToastAndroid.BOTTOM,0,200);
         })
     }
 
