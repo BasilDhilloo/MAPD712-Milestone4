@@ -5,31 +5,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AntIcons from 'react-native-vector-icons/AntDesign';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
-function RadioButton(props) {
-    return (
-        <View style={[{
-          height: 24,
-          width: 24,
-          borderRadius: 12,
-          borderWidth: 2,
-          borderColor: '#000',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }, props.style]}>
-          {
-            props.selected ?
-              <View style={{
-                height: 12,
-                width: 12,
-                borderRadius: 6,
-                backgroundColor: '#000',
-              }}/>
-              : null
-          }
-        </View>
-    );
-  }
-
 var mobileNumberCodes = [...Array(99).keys()].slice(1);
 
 const AddPatientScreen = () => {
@@ -40,6 +15,7 @@ const AddPatientScreen = () => {
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [birthdate, setBirthdate] = useState("");
+    const [gender, setGender] = useState("");
 
     const getAge = (dateString) => {
         var today = new Date();
@@ -144,18 +120,18 @@ const AddPatientScreen = () => {
                 </View>
                 <Text style={styles.inputLabel}>Gender</Text>
                 <View style={{flexDirection:"row"}}>
-                    <View style={{flex: 1, flexDirection:"row"}}>
-                        <RadioButton />
-                        <Text style={{textAlignVertical: 'center', marginLeft: 5}}>Male</Text>
+                    <View style={{flex: 3, flexDirection:"column"}}>
+                            <Picker
+                                selectedValue={gender}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setGender(itemValue) }>
+                                    <Picker.Item label="Male" value="male" key="male"/> 
+                                    <Picker.Item label="Female" value="female" key="female"/> 
+                                    <Picker.Item label="Prefer not to disclose" value="not_disclosed" key="nd"/> 
+                            </Picker>
                     </View>
-                    <View style={{flex: 1, flexDirection:"row"}}>
-                        <RadioButton />
-                        <Text style={{textAlignVertical: 'center', marginLeft: 5}}>Female</Text>
+                    <View style={{flex: 2, flexDirection:"column"}}>
                     </View>
-                </View>
-                <View style={{flexDirection:"row", marginTop: 5, marginBottom: 10}}>
-                        <RadioButton />
-                        <Text style={{textAlignVertical: 'center', marginLeft: 5}}>Choose not to specify</Text>
                 </View>
                 <Text style={styles.inputLabel}>Email address</Text>
                 <View style={styles.textInputContainer}>
@@ -163,7 +139,7 @@ const AddPatientScreen = () => {
                 </View>
                 <Text style={styles.inputLabel}>Mobile Number</Text>
                 <View style={{flexDirection:"row"}}>
-                    <View style={{flex: 2, flexDirection:"column"}}>
+                    <View style={{flex: 4, flexDirection:"column"}}>
                         <Picker
                             selectedValue={selectedCountryCode}
                             onValueChange={(itemValue, itemIndex) =>
@@ -175,7 +151,7 @@ const AddPatientScreen = () => {
                             )}
                         </Picker>
                     </View>
-                    <View style={{...styles.textInputContainer, flex: 5}}>
+                    <View style={{...styles.textInputContainer, flex: 8}}>
                         <TextInput style={styles.inputLabel}/>
                     </View>
                 </View>
