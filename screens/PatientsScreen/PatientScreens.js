@@ -18,7 +18,7 @@ const PatientsHomeScreen = ({navigation}) => {
     const renderItem = ({ item }) => (
         <View
             style={styles.item}>
-            <Icon style={{flex: 1}} name="person-circle" size={80} />
+            <Icon style={{flex: 2}} name="person-circle" size={80} />
             <Text 
                 style={styles.itemName} 
                 onPress={()=>navigation.navigate('ViewPatientScreen', {patient: item})}>
@@ -42,6 +42,7 @@ const PatientsHomeScreen = ({navigation}) => {
                     id: patient._id,
                     firstName: patient.firstName,
                     lastName: patient.lastName,
+                    age: patient.age,
                     dob: patient.birthDate,
                     doc: patient.doctor
                 }]
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
     },
     itemName: {
-        flex: 4,
+        flex: 5,
         fontSize: 20,
         color: "black",
         fontWeight: "bold",

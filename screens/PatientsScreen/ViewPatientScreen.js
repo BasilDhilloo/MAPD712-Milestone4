@@ -16,11 +16,11 @@ const ViewPatientScreen = ({ route, navigation }) => {
     return(
         <SafeAreaView style={styles.container}>
             <Icon style={{textAlign: 'center'}} name="person-circle" size={80} />
-            <Text style={styles.screenTitle}>View Patient Info</Text>
-            <Text style={styles.dataLabel}>Patient Name</Text>
-            <Text style={styles.dataValue}>{patient.firstName} {patient.lastName}</Text>
+            <Text style={styles.screenTitle}>{patient.firstName} {patient.lastName}</Text>
+            <Text style={styles.dataLabel}>Age</Text>
+            <Text style={styles.dataValue}>{patient.age}</Text>
             <Text style={styles.dataLabel}>Patient ID</Text>
-            <Text style={{...styles.dataValue, fontSize: 25}}>{patient.id}</Text>
+            <Text style={{...styles.dataValue, fontSize: 24}}>{patient.id}</Text>
             <Text style={styles.dataLabel}>Patient DOB</Text>
             <Text style={styles.dataValue}>{patient.dob}</Text>
             <Text style={styles.dataLabel}>Doctor Appointed</Text>

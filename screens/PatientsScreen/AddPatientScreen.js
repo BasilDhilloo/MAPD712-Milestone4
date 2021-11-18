@@ -4,18 +4,31 @@ import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntIcons from 'react-native-vector-icons/AntDesign';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { set } from 'react-native-reanimated';
 
 var mobileNumberCodes = [...Array(99).keys()].slice(1);
 
 const AddPatientScreen = () => {
 
-    const [genderSelected, setGenderSelected] = useState('male');
-    const [selectedCountryCode, setSelectedCountryCode] = useState(0);
-
+    const [selectedCountryCode, setSelectedCountryCode] = useState("");
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [birthdate, setBirthdate] = useState("");
     const [gender, setGender] = useState("");
+    const [email, setEmail] = useState("");
+    const [contactNumber, setContactNumber] = useState("");
+    const [doctor, setDoctor] = useState("");
+
+    const resetInputs = () => {
+        setSelectedCountryCode(0);
+        setFirstname("");
+        setLastname("");
+        setBirthdate("");
+        setGender("");
+        setEmail("");
+        setDoctor("");
+        setContactNumber("");
+    }
 
     const getAge = (dateString) => {
         var today = new Date();
@@ -41,7 +54,7 @@ const AddPatientScreen = () => {
             age: getAge(reverseDate(birthdate)),
             birthDate: birthdate,
             department: "General",
-            doctor: "Dr. Drake"
+            doctor: doctor
         }
         fetch('http://192.168.2.16:5000/patients', {
             method: 'POST',
@@ -55,9 +68,7 @@ const AddPatientScreen = () => {
             if(response.status == 201) {
                 ToastAndroid.showWithGravityAndOffset("Success! Patient added.", 
                                 ToastAndroid.SHORT, ToastAndroid.BOTTOM,0,200);
-                setFirstname("");
-                setLastname("");
-                setBirthdate("");
+                resetInputs();
             } else {
                 ToastAndroid.showWithGravityAndOffset(`Error! Something went wrong`, 
                                 ToastAndroid.SHORT, ToastAndroid.BOTTOM,0,200);
@@ -133,9 +144,14 @@ const AddPatientScreen = () => {
                     <View style={{flex: 2, flexDirection:"column"}}>
                     </View>
                 </View>
-                <Text style={styles.inputLabel}>Email address</Text>
+                    <Text style={styles.inputLabel}>
+                            Email address
+                    </Text>
                 <View style={styles.textInputContainer}>
-                    <TextInput style={styles.inputLabel}/>
+                    <TextInput 
+                        value={email}
+                        onChangeText={text => setEmail(text)} 
+                        style={styles.inputLabel}/>
                 </View>
                 <Text style={styles.inputLabel}>Mobile Number</Text>
                 <View style={{flexDirection:"row"}}>
@@ -152,7 +168,23 @@ const AddPatientScreen = () => {
                         </Picker>
                     </View>
                     <View style={{...styles.textInputContainer, flex: 8}}>
-                        <TextInput style={styles.inputLabel}/>
+                        <TextInput 
+                            value={contactNumber}
+                            onChangeText={text => setContactNumber(text)} 
+                            style={styles.inputLabel}/>
+                    </View>
+                </View>
+                <Text style={styles.inputLabel}>Doctor</Text>
+                <View style={{flexDirection:"row"}}>
+                    <View style={{flex: 1, flexDirection:"column"}}>
+                            <Picker
+                                selectedValue={doctor}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setDoctor(itemValue) }>
+                                    <Picker.Item label="Dr. Rakesh Jha" value="Dr. Rakesh Jha" key="rakesh"/> 
+                                    <Picker.Item label="Dr. Max Manning" value="Dr. Max Manning" key="max"/> 
+                                    <Picker.Item label="Dr. Wang Chu" value="Dr. Wang Chu" key="wang"/> 
+                            </Picker>
                     </View>
                 </View>
                 <View style={styles.saveButton}>
@@ -186,16 +218,17 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     inputLabel: {
-        fontSize: 20,
+        fontSize: 15,
     },
     textInputContainer: {
         flex:10,
         borderWidth: 1,
-        marginBottom: 10
+        marginBottom: 5,
+        height: 40
     },
     saveButton: {
         alignSelf: 'center',
-        marginTop:10,
+        marginTop:0,
     }
   });
 export default AddPatientScreen

@@ -262,7 +262,7 @@ const RecordsHomeScreen = ({navigation}) => {
     const renderItem = ({ item }) => (
         <View
             style={styles.item}>
-            <Icon style={{flex: 1}} name="person-circle" size={80} />
+            <Icon style={{flex: 2}} name="person-circle" size={80} />
             <Text 
                 style={styles.itemName} 
                 onPress={()=>navigation.navigate('ViewRecordsScreen', {patient: item})}>
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
     },
     itemName: {
-        flex: 4,
+        flex: 5,
         fontSize: 20,
         color: "black",
         fontWeight: "bold",
