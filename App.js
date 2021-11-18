@@ -31,7 +31,10 @@ const Tab = createBottomTabNavigator();
 
 const HomeScreen = () => {
   return(
-    <Text>This is Home Screen</Text>
+    <Icon
+      name="home"
+      size={200}
+      style={styles.homeScreen}/>
   )
 }
 
@@ -77,6 +80,11 @@ const App: () => Node = () => {
 };
 
 const styles = StyleSheet.create({
+  homeScreen:{
+    textAlign: 'center',
+    marginHorizontal: 'auto',
+    paddingTop: 200
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
