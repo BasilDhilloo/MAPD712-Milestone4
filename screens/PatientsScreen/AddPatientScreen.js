@@ -37,6 +37,44 @@ const AddPatientScreen = () => {
     const [genderSelected, setGenderSelected] = useState('male');
     const [selectedCountryCode, setSelectedCountryCode] = useState(0);
 
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
+    const [birthdate, setBirthdate] = useState("");
+
+    const onAddPatientClick = () => {
+        const newPatient = {
+            firstName: firstname,
+            lastName: lastname,
+            address: "Dummy Address",
+            age: 10,
+            birthDate: birthdate,
+            department: "Dummy Department",
+            doctor: "Dummy Dr"
+        }
+        console.log(newPatient)
+        fetch('http://192.168.2.16:5000/patients', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newPatient)
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    const birthDateChange = (text) => {
+        if(text.length == (birthdate.length+1)){
+            if ((text.length == 2) || (text.length == 5)){
+                text = text + "/"
+            }
+        }
+        setBirthdate(text)
+    }
+
     return(
         <SafeAreaView style={styles.container}>
             <ScrollView>
@@ -47,12 +85,31 @@ const AddPatientScreen = () => {
                     name="pluscircle" 
                     size={30} />
                 <Text style={styles.inputLabel}>Full Name</Text>
-                <View style={styles.textInputContainer}>
-                    <TextInput style={styles.inputLabel}/>
+                <View style={{flexDirection:"row"}}>
+                    <View style={styles.textInputContainer}>
+                        <TextInput 
+                            style={styles.inputLabel} 
+                            value={firstname}
+                            onChangeText={text => setFirstname(text)}
+                            placeholder="First Name"/>
+                    </View>
+                    <View style={{flex:1}}/>
+                    <View style={styles.textInputContainer}>
+                        <TextInput 
+                            style={styles.inputLabel} 
+                            value={lastname}
+                            onChangeText={text => setLastname(text)}
+                            placeholder="Last Name"/>
+                    </View>
                 </View>
                 <Text style={styles.inputLabel}>Date of birth</Text>
                 <View style={styles.textInputContainer}>
-                    <TextInput style={styles.inputLabel} placeholder="mm/dd/yyyy"/>
+                    <TextInput 
+                        style={styles.inputLabel} 
+                        value={birthdate}
+                        onChangeText={text => birthDateChange(text)}
+                        maxLength={10}
+                        placeholder="dd/mm/yyyy"/>
                 </View>
                 <Text style={styles.inputLabel}>Gender</Text>
                 <View style={{flexDirection:"row"}}>
@@ -93,7 +150,8 @@ const AddPatientScreen = () => {
                 </View>
                 <View style={styles.saveButton}>
                 <Button 
-                    title="   SAVE   "/>
+                    title="   SAVE   "
+                    onPress={onAddPatientClick}/>
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -124,6 +182,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     textInputContainer: {
+        flex:10,
         borderWidth: 1,
         marginBottom: 10
     },

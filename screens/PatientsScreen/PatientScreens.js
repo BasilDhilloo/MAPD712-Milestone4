@@ -80,7 +80,7 @@ const PatientsHomeScreen = ({navigation}) => {
       );
 
     useEffect(() => {
-        fetch('http://192.168.2.22:5000/patients', {
+        fetch('http://192.168.2.16:5000/patients', {
             method: 'GET',
             headers: {
                 "Accept": "application/json"
@@ -103,8 +103,7 @@ const PatientsHomeScreen = ({navigation}) => {
         .catch((err) => {
             console.log(err);
         })
-        setPatientsList(patientsData)
-    }, [])
+    }, [navigation])
 
     return(
         <SafeAreaView style={styles.container}>
