@@ -11,58 +11,6 @@ import ViewPatientScreen from './ViewPatientScreen';
 
 const Stack = createNativeStackNavigator();
 
-var patientsData = [
-    {
-        id: "SK-0033111",
-        firstName: "Dominic",
-        lastName: "King",
-        dob: "30 Oct, 1965",
-        doc: "Dr. Max Manning"
-    },
-    {
-        id: "SK-0033112",
-        firstName: "Jane",
-        lastName: "Lawrence",
-        dob: "5 June, 1965",
-        doc: "Dr. Max Manning"
-    },
-    {
-        id: "SK-0033113",
-        firstName: "Max",
-        lastName: "Manning",
-        dob: "2 Jan, 1989",
-        doc: "Dr. Max Manning"
-    },
-    {
-        id: "SK-0033114",
-        firstName: "Hannah",
-        lastName: "Sharp",
-        dob: "30 March, 1965",
-        doc: "Dr. Max Manning"
-    },
-    {
-        id: "SK-0033115",
-        firstName: "Jack",
-        lastName: "Piper",
-        dob: "6 July, 1965",
-        doc: "Dr. Max Manning"
-    },
-    {
-        id: "SK-0033116",
-        firstName: "Colin",
-        lastName: "Ferguson",
-        dob: "30 Oct, 1965",
-        doc: "Dr. Max Manning"
-    },
-    {
-        id: "SK-0033117",
-        firstName: "Maria",
-        lastName: "Martin",
-        dob: "30 Oct, 1965",
-        doc: "Dr. Max Manning"
-    },
-  ];
-
 const PatientsHomeScreen = ({navigation}) => {
 
     const [patientsList, setPatientsList] = useState([])
@@ -79,7 +27,7 @@ const PatientsHomeScreen = ({navigation}) => {
         </View>
       );
 
-    useEffect(() => {
+    const reloadPatients = () => {
         fetch('http://192.168.2.16:5000/patients', {
             method: 'GET',
             headers: {
@@ -103,16 +51,28 @@ const PatientsHomeScreen = ({navigation}) => {
         .catch((err) => {
             console.log(err);
         })
+    }
+
+    useEffect(() => {
+        reloadPatients();
     }, [navigation])
 
     return(
         <SafeAreaView style={styles.container}>
         <Text style={styles.screenTitle}>All Patients</Text>
-        <AntIcons 
-            style={styles.addPatientButton}
-            name="pluscircle" 
-            size={30} 
-            onPress={()=>navigation.navigate('AddPatientScreen')}/>
+        <View style={{flexDirection: "row"}}>
+            <Icon
+                style={styles.addPatientButton}
+                name="reload-circle" 
+                size={35} 
+                onPress={reloadPatients}/>
+            <View flex={8} />
+            <AntIcons 
+                style={styles.addPatientButton}
+                name="pluscircle" 
+                size={30} 
+                onPress={()=>navigation.navigate('AddPatientScreen')}/>
+        </View>
         <FlatList
           data={patientsList}
           renderItem={renderItem}
@@ -167,8 +127,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     addPatientButton: {
-        marginHorizontal: 15,
-        textAlign: 'right'
+        marginHorizontal: 15
     }
   });
 

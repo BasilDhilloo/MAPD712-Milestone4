@@ -41,15 +41,31 @@ const AddPatientScreen = () => {
     const [lastname, setLastname] = useState("");
     const [birthdate, setBirthdate] = useState("");
 
+    const getAge = (dateString) => {
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+
+    const reverseDate = (date) => {
+        var newdate = date.split("/").reverse().join("/");
+        return newdate;
+    }
+
     const onAddPatientClick = () => {
         const newPatient = {
             firstName: firstname,
             lastName: lastname,
-            address: "Dummy Address",
-            age: 10,
+            address: "Toronto",
+            age: getAge(reverseDate(birthdate)),
             birthDate: birthdate,
-            department: "Dummy Department",
-            doctor: "Dummy Dr"
+            department: "General",
+            doctor: "Dr. Drake"
         }
         console.log(newPatient)
         fetch('http://192.168.2.16:5000/patients', {
