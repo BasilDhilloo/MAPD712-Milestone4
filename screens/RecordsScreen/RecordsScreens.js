@@ -15,242 +15,34 @@ const Stack = createNativeStackNavigator();
 var patientsData = [
     {
         id: "SK-0033111",
-        firstName: "Dominic",
-        lastName: "King",
-        dob: "30 Oct, 1965",
-        doc: "Dr. Max Manning",
-        records:
-        {
-            pressure:
-            {
-                date:"29 Jan, 1999",
-                time:"11:12",
-                value:"64"
-            },
-            respiratory:
-            {
-                date:"25 Dec, 2000",
-                time:"10:12",
-                value:"54"
-            },
-            oxygen:
-            {
-                date:"18 Oct, 2005",
-                time:"08:12",
-                value:"44"
-            },
-            heartbeat:
-            {
-                date:"06 Nov, 2010",
-                time:"09:12",
-                value:"34"
-            }
-        }
+        firstName: "Jon",
+        lastName: "Snow",
+        address: "23 Lnaor Redgrave",
+        age: "32",
+        birthDate: "21-08-1991",
+        department: "Dental",
+        doctor: "Jay-z",
     },
     {
         id: "SK-0033112",
-        firstName: "Jane",
-        lastName: "Lawrence",
-        dob: "5 June, 1965",
-        doc: "Dr. Max Manning",
-        records:
-        {
-            pressure:
-            {
-                date:"29 Jan, 1999",
-                time:"11:12",
-                value:"64"
-            },
-            respiratory:
-            {
-                date:"25 Dec, 2000",
-                time:"10:12",
-                value:"54"
-            },
-            oxygen:
-            {
-                date:"18 Oct, 2005",
-                time:"08:12",
-                value:"44"
-            },
-            heartbeat:
-            {
-                date:"06 Nov, 2010",
-                time:"09:12",
-                value:"34"
-            }
-        }
+        firstName: "Kim",
+        lastName: "Kardashion",
+        address: "32 WentWorht",
+        age: "31",
+        birthDate: "31-3-1992",
+        department: "Kidney",
+        doctor: "Dre",        
     },
     {
         id: "SK-0033113",
-        firstName: "Max",
-        lastName: "Manning",
-        dob: "2 Jan, 1989",
-        doc: "Dr. Max Manning",
-        records:
-        {
-            pressure:
-            {
-                date:"29 Jan, 1999",
-                time:"11:12",
-                value:"64"
-            },
-            respiratory:
-            {
-                date:"25 Dec, 2000",
-                time:"10:12",
-                value:"54"
-            },
-            oxygen:
-            {
-                date:"18 Oct, 2005",
-                time:"08:12",
-                value:"44"
-            },
-            heartbeat:
-            {
-                date:"06 Nov, 2010",
-                time:"09:12",
-                value:"34"
-            }
-        }
-    },
-    {
-        id: "SK-0033114",
-        firstName: "Hannah",
-        lastName: "Sharp",
-        dob: "30 March, 1965",
-        doc: "Dr. Max Manning",
-        records:
-        {
-            pressure:
-            {
-                date:"29 Jan, 1999",
-                time:"11:12",
-                value:"64"
-            },
-            respiratory:
-            {
-                date:"25 Dec, 2000",
-                time:"10:12",
-                value:"54"
-            },
-            oxygen:
-            {
-                date:"18 Oct, 2005",
-                time:"08:12",
-                value:"44"
-            },
-            heartbeat:
-            {
-                date:"06 Nov, 2010",
-                time:"09:12",
-                value:"34"
-            }
-        }
-    },
-    {
-        id: "SK-0033115",
-        firstName: "Jack",
-        lastName: "Piper",
-        dob: "6 July, 1965",
-        doc: "Dr. Max Manning",
-        records:
-        {
-            pressure:
-            {
-                date:"29 Jan, 1999",
-                time:"11:12",
-                value:"64"
-            },
-            respiratory:
-            {
-                date:"25 Dec, 2000",
-                time:"10:12",
-                value:"54"
-            },
-            oxygen:
-            {
-                date:"18 Oct, 2005",
-                time:"08:12",
-                value:"44"
-            },
-            heartbeat:
-            {
-                date:"06 Nov, 2010",
-                time:"09:12",
-                value:"34"
-            }
-        }
-    },
-    {
-        id: "SK-0033116",
-        firstName: "Colin",
-        lastName: "Ferguson",
-        dob: "30 Oct, 1965",
-        doc: "Dr. Max Manning",
-        records:
-        {
-            pressure:
-            {
-                date:"29 Jan, 1999",
-                time:"11:12",
-                value:"64"
-            },
-            respiratory:
-            {
-                date:"25 Dec, 2000",
-                time:"10:12",
-                value:"54"
-            },
-            oxygen:
-            {
-                date:"18 Oct, 2005",
-                time:"08:12",
-                value:"44"
-            },
-            heartbeat:
-            {
-                date:"06 Nov, 2010",
-                time:"09:12",
-                value:"34"
-            }
-        }
-    },
-    {
-        id: "SK-0033117",
-        firstName: "Maria",
-        lastName: "Martin",
-        dob: "30 Oct, 1965",
-        doc: "Dr. Max Manning",
-        records:
-        {
-            pressure:
-            {
-                date:"29 Jan, 1999",
-                time:"11:12",
-                value:"64"
-            },
-            respiratory:
-            {
-                date:"25 Dec, 2000",
-                time:"10:12",
-                value:"54"
-            },
-            oxygen:
-            {
-                date:"18 Oct, 2005",
-                time:"08:12",
-                value:"44"
-            },
-            heartbeat:
-            {
-                date:"06 Nov, 2010",
-                time:"09:12",
-                value:"34"
-            }
-        }
-    },
+        firstName: "Ali",
+        lastName: "Hassan",
+        address: "34 Gt, LA",
+        age: "30",
+        birthDate: "03-3-1993",
+        department: "Ortho",
+        doctor: "Dr Snoop",
+    }
   ];
 
   
@@ -271,9 +63,37 @@ const RecordsHomeScreen = ({navigation}) => {
         </View>
       );
 
+      const reloadPatients = () => {
+        fetch('http://192.168.0.18:5000/patients', {
+            method: 'GET',
+            headers: {
+                "Accept": "application/json"
+            }
+        })
+        .then(res => res.json())
+        .then(patientList => {
+            var newPatientData = []
+            patientList.map((patient) => {
+                newPatientData = [...newPatientData, {
+                    id: patient._id,
+                    firstName: patient.firstName,
+                    lastName: patient.lastName,
+                    age: patient.age,
+                    dob: patient.birthDate,
+                    doc: patient.doctor
+                }]
+            })
+            setPatientsList(newPatientData);
+            ToastAndroid.showWithGravityAndOffset("Patients' list refreshed", ToastAndroid.SHORT, ToastAndroid.BOTTOM,0,200);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
     useEffect(() => {
-        setPatientsList(patientsData)
-    }, [])
+        reloadPatients();
+    }, [navigation])
 
     return(
         <SafeAreaView style={styles.container}>

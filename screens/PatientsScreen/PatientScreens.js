@@ -28,7 +28,7 @@ const PatientsHomeScreen = ({navigation}) => {
       );
 
     const reloadPatients = () => {
-        fetch('http://192.168.2.16:5000/patients', {
+        fetch('http://192.168.0.18:5000/patients', {
             method: 'GET',
             headers: {
                 "Accept": "application/json"

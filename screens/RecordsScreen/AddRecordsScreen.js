@@ -33,6 +33,21 @@ function RadioButton(props) {
 var amPM = ["AM","PM"];
 var dataType = ["Blood Pressure (X/Y mmHg)","Respiratory Rate (X/min)","Blood Oxygen Level (X%)","Heartbeat Rate (X/min)"];
 
+// var recordsData = [{
+//     patientId: "001",
+//     date: "30th August, 2004",
+//     time: "04:10pm",
+//     typeOfData: "Blood Pressure",
+//     value: "110bpm"
+//     },{
+//     patientId: "001",
+//     date: "30th August, 2004",
+//     time: "04:10pm",
+//     typeOfData: "Heart Rate",
+//     value: "90 per minute"
+//     }
+// ]
+
 var patientsData = [
     {
         id: "SK-0033111",
