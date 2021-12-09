@@ -6,12 +6,30 @@ import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntIcons from 'react-native-vector-icons/AntDesign';
 
-
 const Stack = createNativeStackNavigator();
 
 const ViewPatientScreen = ({ route, navigation }) => {
 
     const {patient} = route.params;
+    const {reloadPatients} = route.params
+
+    const deletePatients = () => {
+        fetch(`http://192.168.0.11:5000/patients/${patient.id}`, {
+            method: 'DELETE',
+            headers: {
+                "Accept": "application/json"
+            }
+        })
+        .then(res => {
+            reloadPatients();
+            navigation.navigate('PatientsHome')
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
+   
 
     return(
         <SafeAreaView style={styles.container}>
@@ -25,6 +43,12 @@ const ViewPatientScreen = ({ route, navigation }) => {
             <Text style={styles.dataValue}>{patient.dob}</Text>
             <Text style={styles.dataLabel}>Doctor Appointed</Text>
             <Text style={styles.dataValue}>{patient.doc}</Text>
+            <Button
+                onPress={()=>{deletePatients()}}
+                title="Delete"
+                color="#841584"
+                accessibilityLabel="Delete the following Patient"
+                />
         </SafeAreaView>
     )    
 };

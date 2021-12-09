@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Button, Text, View, SafeAreaView, StyleSheet, StatusBar, ToastAndroid } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
@@ -21,14 +21,14 @@ const PatientsHomeScreen = ({navigation}) => {
             <Icon style={{flex: 2}} name="person-circle" size={80} />
             <Text 
                 style={styles.itemName} 
-                onPress={()=>navigation.navigate('ViewPatientScreen', {patient: item})}>
+                onPress={()=>navigation.navigate('ViewPatientScreen', {patient: item, reloadPatients})}>
                 {item.firstName} {item.lastName}
             </Text>
         </View>
       );
 
     const reloadPatients = () => {
-        fetch('http://192.168.0.18:5000/patients', {
+        fetch('http://192.168.0.11:5000/patients', {
             method: 'GET',
             headers: {
                 "Accept": "application/json"
@@ -57,7 +57,7 @@ const PatientsHomeScreen = ({navigation}) => {
 
     useEffect(() => {
         reloadPatients();
-    }, [navigation])
+    }, [])
 
     return(
         <SafeAreaView style={styles.container}>
@@ -73,7 +73,7 @@ const PatientsHomeScreen = ({navigation}) => {
                 style={styles.addPatientButton}
                 name="pluscircle" 
                 size={30} 
-                onPress={()=>navigation.navigate('AddPatientScreen')}/>
+                onPress={()=>navigation.navigate('AddPatientScreen', {reloadPatients})}/>
         </View>
         <FlatList
           data={patientsList}

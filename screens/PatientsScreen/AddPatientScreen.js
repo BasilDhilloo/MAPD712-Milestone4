@@ -8,7 +8,9 @@ import { set } from 'react-native-reanimated';
 
 var mobileNumberCodes = [...Array(99).keys()].slice(1);
 
-const AddPatientScreen = () => {
+const AddPatientScreen = ({ route, navigation }) => {
+
+     const {reloadPatients} = route.params
 
     const [selectedCountryCode, setSelectedCountryCode] = useState("");
     const [firstname, setFirstname] = useState("");
@@ -56,7 +58,7 @@ const AddPatientScreen = () => {
             department: "General",
             doctor: doctor
         }
-        fetch('http://192.168.2.16:5000/patients', {
+        fetch('http://192.168.0.11:5000/patients', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,7 +70,9 @@ const AddPatientScreen = () => {
             if(response.status == 201) {
                 ToastAndroid.showWithGravityAndOffset("Success! Patient added.", 
                                 ToastAndroid.SHORT, ToastAndroid.BOTTOM,0,200);
+                reloadPatients();
                 resetInputs();
+                navigation.navigate('PatientsHome')
             } else {
                 ToastAndroid.showWithGravityAndOffset(`Error! Something went wrong`, 
                                 ToastAndroid.SHORT, ToastAndroid.BOTTOM,0,200);
